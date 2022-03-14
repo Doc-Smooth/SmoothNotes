@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SmoothNotes.Renders;assembly=SmoothNotes"
+    x:Class="SmoothNotes.Views.Landing.RegistrationPage"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.PresentationMode="Modal"
+    Style="{DynamicResource BaseContentPage}">
+    <ContentPage.Content>
+        <StackLayout
+            Padding="40"
+            VerticalOptions="Center"
+            HorizontalOptions="FillAndExpand">
+            
+            <local:MyEntry 
+                Placeholder="Username"
+                x:Name="Username"
+                HorizontalTextAlignment="Center"
+                Style="{DynamicResource EntryMedium}"
+                Margin="10">
+                <Entry.PlaceholderColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="#bfbfbf"></On>
+                        <On Platform="Android" Value="#bfbfbf"></On>
+                    </OnPlatform>
+                </Entry.PlaceholderColor>
+            </local:MyEntry>
+            
+            <local:MyEntry 
+                IsPassword="True"
+                Placeholder="Password"
+                x:Name="Password"
+                HorizontalTextAlignment="Center"
+                Style="{DynamicResource EntryMedium}"
+                Margin="10">
+                <Entry.PlaceholderColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="#bfbfbf"></On>
+                        <On Platform="Android" Value="#bfbfbf"></On>
+                    </OnPlatform>
+                </Entry.PlaceholderColor>
+            </local:MyEntry>
+            
+            <Button 
+                Text="Create Profile"
+                WidthRequest="260"
+                HeightRequest="40"
+                Margin="10"
+                Style="{DynamicResource BaseButton}"
+                Clicked="Registration_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

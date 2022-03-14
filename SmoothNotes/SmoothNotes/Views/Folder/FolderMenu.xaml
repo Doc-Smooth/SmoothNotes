@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Size="300,220"
+    Color="#2A2A2A"
+    x:Class="SmoothNotes.Views.Folder.FolderMenu">
+
+    <StackLayout
+        BackgroundColor="#2A2A2A">
+            <!--BindingContext="{x:Reference Name=FolderMenu}"-->
+        <Label 
+            Margin="10"
+            Text="{Binding Folder.Name}"
+            HorizontalOptions="CenterAndExpand"
+            Style="{DynamicResource LabelMedium}" />
+        <Button
+            Style="{DynamicResource BaseButton}"
+            Text="Edit"
+            Clicked="Edit_Clicked"
+            HorizontalOptions="Center"
+            WidthRequest="260" />
+        <Button
+            Style="{DynamicResource BaseButton}"
+            Text="Favorite"
+            Clicked="Fav_Clicked"
+            HorizontalOptions="Center"
+            WidthRequest="260" />
+        <Button 
+            Style="{DynamicResource BaseButton}"
+            Text="Delete"
+            Clicked="Delete_Clicked"
+            HorizontalOptions="Center"
+            WidthRequest="260" />
+        
+    </StackLayout>
+</xct:Popup>

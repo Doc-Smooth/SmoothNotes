@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SmoothNotes.Views.Note.SearchResultPage"
+    xmlns:model="clr-namespace:SmoothNotes.Models"
+    Shell.PresentationMode="Modal"
+    Style="{StaticResource BaseContentPage}">
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="*" RowDefinitions="*" Style="{StaticResource BaseGrid}">
+
+            <ListView
+                x:Name="ListViewer"
+                HasUnevenRows="True"
+                IsPullToRefreshEnabled="False"
+                SelectionMode="Single"
+                SeparatorVisibility="None"
+                Style="{StaticResource BaseListView}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:SearchString">
+                        <ViewCell>
+                            <Grid Padding="10" Style="{StaticResource BaseGrid}">
+                                <Frame  Style="{StaticResource BaseFrame}">
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout VerticalOptions="Center">
+                                            <Label
+                                                Style="{StaticResource LabelSmall}"
+                                                Text="{Binding LineNum, StringFormat='Line Number: {0}'}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Style="{StaticResource LabelMedium}"
+                                                Text="{Binding Line}"
+                                                VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

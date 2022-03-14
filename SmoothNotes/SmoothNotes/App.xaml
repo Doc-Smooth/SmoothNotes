@@ -1,13 +1,152 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="SmoothNotes.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="PrimaryLight">#2196F3</Color>
+            <Color x:Key="PrimaryDark">#2196F3</Color>
+            <!--<Color x:Key="Primary">#2196F3</Color>-->
+            <Color x:Key="Primary">#fc9003</Color>
+            <Color x:Key="Danger">Red</Color>
+
+            <Color x:Key="Contrast">#10000000</Color>
+            <!--<Color x:Key="TextContrast">#F0000000</Color>-->
+            <Color x:Key="TextContrast">#FFFFFFFF</Color>
+
+            <!--<Color x:Key="TextColor">#000000</Color>
+            <Color x:Key="WindowBackgroundColor">#f2f2f7</Color>-->
+            <Color x:Key="TextColor">#ffffff</Color>
+            <Color x:Key="WindowBackgroundColor">#2A2A2A</Color>
+
+            <!--<Color x:Key="CardColor">#dbdbdb</Color>-->
+            <Color x:Key="CardColor">#242424</Color>
+            <Color x:Key="BorderColor">#fc9003</Color>
+            <!--<Color x:Key="BorderColor">#bf6300</Color>-->
+
+            <Style x:Key="BaseContentPage" TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+            </Style>
+            <Style x:Key="BasePopup" TargetType="xct:Popup">
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+            </Style>
+
+            <Style x:Key="BaseImageButton" TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource WindowBackgroundColor}" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="BorderWidth" Value="0" />
+            </Style>
+
+            <Style x:Key="BaseLabel" TargetType="Label">
+                <!--<Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColor}}" />-->
+                <Setter Property="TextColor" Value="{StaticResource TextContrast}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+            <Style x:Key="LabelSmall" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="LabelMedium" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="Medium" />
+            </Style>
+            <Style x:Key="LabelLarge" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="Large" />
+            </Style>
+            <Style x:Key="LabelError" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="TextColor" Value="{StaticResource Danger}" />
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+
+            <Style x:Key="BaseEditor" TargetType="Editor">
+                <!--<Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColor}}" />-->
+                <Setter Property="TextColor" Value="{StaticResource TextContrast}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <Style x:Key="BaseButton" TargetType="Button">
+                <!--<Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColor}}" />-->
+                <Setter Property="TextColor" Value="{StaticResource TextContrast}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource BorderColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+
+            <!--<Style x:Key="BaseButton" TargetType="Button">
+                --><!--<Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColor}}" />--><!--
+                <Setter Property="TextColor" Value="{StaticResource TextContrast}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>-->
+
+            <Style x:Key="BaseEntry" TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+            </Style>
+            <Style x:Key="EntrySmall" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+            <Style x:Key="EntryMedium" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+                <Setter Property="FontSize" Value="Medium" />
+            </Style>
+            <Style x:Key="EntryLarge" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+                <Setter Property="FontSize" Value="Large" />
+            </Style>
+
+            <Style x:Key="BaseFrame" TargetType="Frame">
+                <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource CardColorDark}, Light={StaticResource CardColor}}" />-->
+                <Setter Property="BackgroundColor" Value="{StaticResource CardColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="HasShadow" Value="{OnPlatform Android=true, iOS=false, Default=true}" />
+            </Style>
+
+            <Style x:Key="BaseListView" TargetType="ListView">
+                <Setter Property="HasUnevenRows" Value="True" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+                <Setter Property="RefreshControlColor" Value="{StaticResource Primary}" />
+                <Setter Property="SeparatorVisibility" Value="None" />
+            </Style>
+
+            <Style x:Key="BaseRefresh" TargetType="RefreshView">
+                <Setter Property="RefreshColor" Value="{StaticResource Primary}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+            </Style>
+
+            <Style x:Key="BaseCollectionView" TargetType="CollectionView">
+                <Setter Property="ItemSizingStrategy" Value="MeasureAllItems" />
+                <Setter Property="SelectionMode" Value="Single" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+
+            </Style>
+
+            <Style x:Key="BaseGrid" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackgroundColor}" />
+            </Style>
+
+
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextContrast}" />
+                <Setter Property="Shell.TitleColor" Value="{StaticResource TextContrast}" />
+                <Setter Property="Shell.DisabledColor" Value="#B4000000" />
+                <Setter Property="Shell.UnselectedColor" Value="#95000000" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource WindowBackgroundColor}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95000000"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource TextContrast}"/>
+            </Style>
+            <!--<Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -26,7 +165,7 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

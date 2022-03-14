@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:SmoothNotes.Models"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+    xmlns:viewmodels="clr-namespace:SmoothNotes.ViewModels"
+    Shell.PresentationMode="Modal"
+    x:Class="SmoothNotes.Views.Folder.FolderFavPage">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:FolderViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Clicked="Logout_Clicked" />
+        <ToolbarItem Text="+" Command="{Binding AddCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <Grid 
+            Style="{StaticResource BaseGrid}"
+            RowDefinitions="*" 
+            ColumnDefinitions="*">
+
+            <RefreshView
+                Style="{StaticResource BaseRefresh}"
+                Command="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+
+                <CollectionView
+                    Style="{StaticResource BaseCollectionView}"
+                    ItemsSource="{Binding FoldersFav}"
+                    SelectedItem="{Binding SelectedCommand, Mode=TwoWay}"
+                    Margin="5">
+
+                    <CollectionView.ItemsLayout>
+
+                        <GridItemsLayout 
+                            Orientation="Vertical" Span="2" />
+
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate 
+                            x:DataType="model:Folder">
+
+                            <Grid 
+                                Padding="10"
+                                Style="{StaticResource BaseGrid}">
+
+                                <Frame
+                                    xct:TouchEffect.LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FolderViewModel}}, Path=MenuCommand}"
+                                    xct:TouchEffect.LongPressCommandParameter="{Binding .}"
+                                    xct:TouchEffect.LongPressDuration="500"
+                                    xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FolderViewModel}}, Path=SelectedCommand}"
+                                    xct:TouchEffect.CommandParameter="{Binding .}"
+                                    Style="{StaticResource BaseFrame}">
+
+                                    <StackLayout
+                                        Orientation="Horizontal">
+
+                                        <StackLayout
+                                            VerticalOptions="Center">
+
+                                            <Label
+                                                Text="{Binding Name}"
+                                                Style="{StaticResource LabelLarge}"
+                                                FontAttributes="Bold"
+                                                VerticalOptions="Center" />
+
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

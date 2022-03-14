@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:SmoothNotes.ViewModels"
+    x:Class="SmoothNotes.Views.Note.NoteCreatePage"
+    Title="{Binding Title}"
+    Style="{StaticResource BaseContentPage}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:NoteChangeViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+    
+        <StackLayout Padding="20">
+        
+            <Label 
+                Style="{StaticResource LabelLarge}"
+                Text="{Binding Title}"/>
+            
+            <Label 
+                Style="{StaticResource LabelMedium}"
+                Text="Title:"/>
+            
+            <Entry 
+                Style="{StaticResource EntrySmall}"
+                Text="{Binding Note.Name}"/>
+            
+            <Label 
+                Style="{StaticResource LabelMedium}"
+                Text="Text:" />
+            
+            <StackLayout
+                Style="{StaticResource BaseStyle}">
+            
+                <Editor 
+                    Style="{StaticResource BaseEditor}"
+                    FontSize="Small"
+                    x:Name="TextField"
+                    HeightRequest="500"
+                    Keyboard="Chat"
+                    Text="{Binding Note.Text}"
+                    />
+            
+            </StackLayout>
+
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+
+            <Button
+                Style="{StaticResource BaseButton}"
+                Padding="20,0"
+                Command="{Binding SaveNewCommand}"
+                HorizontalOptions="Center"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Save"
+                VerticalOptions="EndAndExpand"
+                />
+        
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
