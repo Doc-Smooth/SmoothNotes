@@ -3,6 +3,10 @@ using SmoothNotes.Views;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using SmoothNotes.Views.Landing;
+using SmoothNotes.Views.Folder;
+using SmoothNotes.Views.Note;
+using SmoothNotes.Views.Profile;
 
 namespace SmoothNotes
 {
@@ -11,13 +15,23 @@ namespace SmoothNotes
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+
+
+            /// NOTE: Routes not directly available in the shell. Meaning routes that is not absolute routes.
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+
+            Routing.RegisterRoute(nameof(FolderMenu), typeof(FolderMenu));
+
+            Routing.RegisterRoute(nameof(NotePage), typeof(NotePage));
+            Routing.RegisterRoute(nameof(NoteEditPage), typeof(NoteEditPage));
+            Routing.RegisterRoute(nameof(NoteCreatePage), typeof(NoteCreatePage));
+            Routing.RegisterRoute(nameof(SearchResultPage), typeof(SearchResultPage));
         }
 
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("//LoginPage");
-        }
+        //private async void OnMenuItemClicked(object sender, EventArgs e)
+        //{
+        //    await Shell.Current.GoToAsync("//LoginPage");
+        //}
     }
 }
