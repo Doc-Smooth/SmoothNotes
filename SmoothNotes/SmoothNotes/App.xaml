@@ -8,8 +8,8 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="PrimaryLight">#2196F3</Color>
-            <Color x:Key="PrimaryDark">#2196F3</Color>
+            <Color x:Key="PrimaryLight">#fc9003</Color>
+            <Color x:Key="PrimaryDark">#fc9003</Color>
             <!--<Color x:Key="Primary">#2196F3</Color>-->
             <Color x:Key="Primary">#fc9003</Color>
             <Color x:Key="Danger">Red</Color>

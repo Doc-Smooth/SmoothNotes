@@ -12,6 +12,9 @@ using Xamarin.Forms;
 
 namespace SmoothNotes.ViewModels
 {
+    /// <summary>
+    /// Used by both new note and edit note pages
+    /// </summary>
     public class NoteChangeViewModel : ViewModelBase
     {
         private Note note;
@@ -32,7 +35,7 @@ namespace SmoothNotes.ViewModels
             Title = $"Adding new note";
             //Profile = SelectedService.profile;
             Folder = ValueParserService.folder;
-            if(ValueParserService.note.Id == null)
+            if(ValueParserService.note == null)
                 Note = new Note();
             else
                 Note = ValueParserService.note;
@@ -42,14 +45,39 @@ namespace SmoothNotes.ViewModels
             DeleteCommand = new AsyncCommand(Delete);
         }
 
+        /// <summary>
+        /// Delete event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task Delete()
         {
-            await Shell.Current.GoToAsync("..");
-            await Application.Current.MainPage.DisplayToastAsync("Note was deleted", 2000);
+            if (!await ProfileService.Refresh())
+                await Logout();
+
+
+            var confirmation = await Application.Current.MainPage.DisplayAlert("Deleting " + ValueParserService.note.Name, "Are you sure you want to continue?", "Confirm", "Cancel");
+            if (!confirmation)
+                return;
+
+            var result = await NoteService.Remove(ValueParserService.note.Id);
+            if (result)
+            {
+                await Application.Current.MainPage.DisplayToastAsync("Note deleted", 1000);
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+                await Application.Current.MainPage.DisplayToastAsync("Something went wrong", 2000);
         }
 
+        /// <summary>
+        /// Save note event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task Save()
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             try
             {
                 if (string.IsNullOrWhiteSpace(Note.Name))
@@ -58,18 +86,22 @@ namespace SmoothNotes.ViewModels
                     return;
                 }
 
-                //await NoteService.Add(FolderId, title, text);
-                ValueParserService.note = new Note();
-                await Shell.Current.GoToAsync("..");
-                //var r = await LifeCycleService.StillAlive();
-                //if (!r)
-                //{
-                //    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-                //    return;
-                //}
-                //else
-                //{
-                //}
+                string key = await CryptographService.ReadPuKKey(ValueParserService.profile.PuK);
+                string Text = "";
+                if (!string.IsNullOrEmpty(Note.Text))
+                {
+                    Text = await CryptographService.RSAEncrypt(Note.Text, key, false);
+                }
+                Note.Text = Text;
+
+                bool status = await NoteService.Edit(Note);
+                if (status)
+                {
+                    await Application.Current.MainPage.DisplayToastAsync("Changes applied", 1000);
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                    await Application.Current.MainPage.DisplayToastAsync("Something went wrong", 2000);
             }
             catch (Exception e)
             {
@@ -78,8 +110,16 @@ namespace SmoothNotes.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// Save new note event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task SaveNew()
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             try
             {
                 if (string.IsNullOrWhiteSpace(Note.Name))
@@ -88,17 +128,28 @@ namespace SmoothNotes.ViewModels
                     return;
                 }
 
-                //await NoteService.Add(FolderId, title, text);
+                string key = await CryptographService.ReadPuKKey(ValueParserService.profile.PuK);
+                string Text = "";
+                if (!string.IsNullOrEmpty(Note.Text))
+                {
+                    Text = await CryptographService.RSAEncrypt(Note.Text, key, false);
+                }
+                Note note = new Note
+                {
+                    Id = "",
+                    FolderId = ValueParserService.folder.Id,
+                    Name = Note.Name,
+                    Text = Text,
+                    CrDate = DateTime.Now,
+                    EdDate = DateTime.Now
+                };
+
+                bool status = await NoteService.Add(note);
+                if (status)
+                    await Application.Current.MainPage.DisplayToastAsync("Noted added", 1000);
+                else
+                    await Application.Current.MainPage.DisplayToastAsync("Something went wrong", 2000);
                 await Shell.Current.GoToAsync("..");
-                //var r = await LifeCycleService.StillAlive();
-                //if (!r)
-                //{
-                //    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-                //    return;
-                //}
-                //else
-                //{
-                //}
             }
             catch (Exception e)
             {

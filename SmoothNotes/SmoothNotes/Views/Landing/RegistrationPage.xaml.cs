@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,22 +21,30 @@ namespace SmoothNotes.Views.Landing
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Registration btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Registration_Clicked(object sender, EventArgs e)
         {
-            var p = new ProfileDTO();
-            p.username = Username.Text;
-            p.password = Password.Text;
+            // Adds fields to a new object
+            var p = new Register();
+            p.Id = "";
+            p.Name = Username.Text;
+            p.Pw = Password.Text;
 
+            //Checks for different criteria, large, small letters, numbers and so on
             bool letterCh =
-                p.password.Any(c => char.IsLetter(c));
+                p.Pw.Any(c => char.IsLetter(c));
             bool digitCh =
-                p.password.Any(c => char.IsDigit(c));
+                p.Pw.Any(c => char.IsDigit(c));
             bool upperCh =
-                p.password.Any(c => char.IsUpper(c));
+                p.Pw.Any(c => char.IsUpper(c));
             bool lowerCh =
-                p.password.Any(c => char.IsLower(c));
+                p.Pw.Any(c => char.IsLower(c));
 
-            if (p.password.Length < 8 || !letterCh || !digitCh || !upperCh || !lowerCh)
+            if (p.Pw.Length < 8 || !letterCh || !digitCh || !upperCh || !lowerCh)
             {
                 await Application.Current.MainPage.DisplayToastAsync("Password needs to be more than 8 character,\ncontain small, large letters and numbers.", 3000);
                 return;
@@ -43,6 +52,7 @@ namespace SmoothNotes.Views.Landing
 
             var result = await ProfileService.Register(p);
 
+            //Handles different return codes
             if(result == "1")
             {
                 await Application.Current.MainPage.DisplayToastAsync("Username already taken.", 3000);

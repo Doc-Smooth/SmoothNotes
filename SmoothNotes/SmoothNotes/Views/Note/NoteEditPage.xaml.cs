@@ -24,6 +24,11 @@ namespace SmoothNotes.Views.Note
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Delete btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void OnDeleteClicked(object sender, EventArgs e)
         {
             if(await DisplayAlert("Delete", "Are you sure about this?", "Accept", "Cancel"))
@@ -33,10 +38,21 @@ namespace SmoothNotes.Views.Note
             }
         }
 
+        /// <summary>
+        /// Search btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void OnSearchButtonClicked(object sender, EventArgs e)
         {
             SearchFunc(TextField.Text, SearchField.Text);
         }
+
+        /// <summary>
+        /// Function for searching in a note, looks at every line and routes with all lines that matches search criteia
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <param name="searchWord"></param>
         void SearchFunc(string sub, string searchWord)
         {
             lineNum = 0;

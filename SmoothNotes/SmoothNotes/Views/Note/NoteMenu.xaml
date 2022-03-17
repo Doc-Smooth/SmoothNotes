@@ -2,27 +2,28 @@
 <xct:Popup 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+    xmlns:viewmodels="clr-namespace:SmoothNotes.ViewModels"
+    Size="300,120"
     Color="#2A2A2A"
     x:Class="SmoothNotes.Views.Note.NoteMenu">
+
+    <xct:Popup.BindingContext>
+        <viewmodels:NoteChangeViewModel />
+    </xct:Popup.BindingContext>
 
 
     <StackLayout
         BackgroundColor="#2A2A2A">
-        <!--BindingContext="{x:Reference Name=FolderMenu}"-->
         <Label 
             Margin="10"
-            Text="{Binding Folder.Name}"
+            Text="{Binding Note.Name}"
             HorizontalOptions="CenterAndExpand"
             Style="{DynamicResource LabelMedium}" />
-        <Button
-            Style="{DynamicResource BaseButton}"
-            Text="Edit"
-            HorizontalOptions="Center"
-            WidthRequest="260" />
         <Button 
             Style="{DynamicResource BaseButton}"
             Text="Delete"
+            Clicked="Button_Clicked"
             HorizontalOptions="Center"
             WidthRequest="260" />
 

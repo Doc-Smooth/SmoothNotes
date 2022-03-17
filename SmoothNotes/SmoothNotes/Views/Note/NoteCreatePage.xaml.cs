@@ -16,7 +16,6 @@ namespace SmoothNotes.Views.Note
         public NoteCreatePage()
         {
             InitializeComponent();
-            //var vm = (NoteChangeViewModel)BindingContext;
         }
     }
 }

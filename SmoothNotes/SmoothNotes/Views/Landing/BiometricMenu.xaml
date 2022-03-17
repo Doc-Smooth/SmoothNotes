@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+    xmlns:viewmodels="clr-namespace:SmoothNotes.ViewModels"
+    xmlns:model="clr-namespace:SmoothNotes.Models"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    x:Class="SmoothNotes.Views.Landing.BiometricMenu">
+    <ContentPage.BindingContext>
+        <viewmodels:BiometricViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <ListView
+            x:Name="ListView"
+            ItemTapped="ListView_ItemTapped"
+            BackgroundColor="{StaticResource WindowBackgroundColor}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding .}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<Grid 
+            Style="{StaticResource BaseGrid}"
+            RowDefinitions="*" 
+            ColumnDefinitions="*">
+            <CollectionView
+                    Style="{StaticResource BaseCollectionView}"
+                    ItemsSource="{Binding Profiles}"
+                    SelectedItem="{Binding SelectedCommand, Mode=TwoWay}"
+                    Margin="5">
+
+                <CollectionView.ItemsLayout>
+
+                    <GridItemsLayout 
+                            Orientation="Vertical" Span="1" />
+
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate 
+                            x:DataType="model:ProfileDTO">
+
+                        <Grid 
+                            Padding="10"
+                            Style="{StaticResource BaseGrid}">
+
+                            <Frame
+                                xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:BiometricViewModel}}, Path=LoginCommand}"
+                                xct:TouchEffect.CommandParameter="{Binding .}"
+                                Style="{StaticResource BaseFrame}">
+
+                                <StackLayout
+                                        Orientation="Horizontal">
+
+                                    <StackLayout
+                                            VerticalOptions="Center">
+
+                                        <Label
+                                            Text="{Binding username}"
+                                            Style="{StaticResource LabelLarge}"
+                                            FontAttributes="Bold"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"/>
+
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>-->
+    </ContentPage.Content>
+</ContentPage>

@@ -38,6 +38,11 @@ namespace SmoothNotes.Views.Folder
             Folder = ValueParserService.folder;
         }
 
+        /// <summary>
+        /// Edit btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Edit_Clicked(object sender, EventArgs e)
         {
             if (!await ProfileService.Refresh())
@@ -60,6 +65,11 @@ namespace SmoothNotes.Views.Folder
                 await Application.Current.MainPage.DisplayToastAsync("Title can't be empty or spaces", 1000);
         }
 
+        /// <summary>
+        /// Favorite btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Fav_Clicked(object sender, EventArgs e)
         {
             if (!await ProfileService.Refresh())
@@ -74,6 +84,11 @@ namespace SmoothNotes.Views.Folder
                 await Application.Current.MainPage.DisplayToastAsync("Something went wrong", 1000);
         }
 
+        /// <summary>
+        /// Delete btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Delete_Clicked(object sender, EventArgs e)
         {
             if (!await ProfileService.Refresh())
@@ -88,8 +103,8 @@ namespace SmoothNotes.Views.Folder
             {
                 if (await FolderService.Delete(ValueParserService.folder.Id))
                 {
-                    await Application.Current.MainPage.DisplayToastAsync("Folder deleted", 1000);
                     Dismiss("refresh");
+                    await Application.Current.MainPage.DisplayToastAsync("Folder deleted", 1000);
                 }
                 else
                     await Application.Current.MainPage.DisplayToastAsync("Something went wrong", 1000);
@@ -97,12 +112,19 @@ namespace SmoothNotes.Views.Folder
 
         }
 
+        /// <summary>
+        /// Logout event handler
+        /// </summary>
+        /// <returns></returns>
         internal async Task Logout()
         {
             if (await ValueParserService.Empty())
             {
-                await Shell.Current.GoToAsync($"//{nameof(LandingPage)}");
-                await Application.Current.MainPage.DisplayToastAsync("Logging out", 1000);
+                await Application.Current.MainPage.DisplayToastAsync("Logging out", 500);
+                await Shell.Current.Navigation.PopToRootAsync();
+                await Shell.Current.GoToAsync($"///{nameof(LandingPage)}");
+                await Shell.Current.Navigation.PopToRootAsync();
+
 
             }
             else

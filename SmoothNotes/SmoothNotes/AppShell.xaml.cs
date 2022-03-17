@@ -7,6 +7,7 @@ using SmoothNotes.Views.Landing;
 using SmoothNotes.Views.Folder;
 using SmoothNotes.Views.Note;
 using SmoothNotes.Views.Profile;
+using System.Linq;
 
 namespace SmoothNotes
 {
@@ -16,10 +17,10 @@ namespace SmoothNotes
         {
             InitializeComponent();
 
-
-            /// NOTE: Routes not directly available in the shell. Meaning routes that is not absolute routes.
+            /// NOTE: Routes not directly available in the shell. Meaning routes that are not absolute routes.
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+            Routing.RegisterRoute(nameof(BiometricMenu), typeof(BiometricMenu));
 
             Routing.RegisterRoute(nameof(FolderMenu), typeof(FolderMenu));
 
@@ -28,6 +29,8 @@ namespace SmoothNotes
             Routing.RegisterRoute(nameof(NoteCreatePage), typeof(NoteCreatePage));
             Routing.RegisterRoute(nameof(SearchResultPage), typeof(SearchResultPage));
         }
+
+
 
         //private async void OnMenuItemClicked(object sender, EventArgs e)
         //{

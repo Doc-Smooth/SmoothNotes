@@ -23,19 +23,6 @@ namespace SmoothNotes.Services.Storage
             };
         }
 
-        //public static async Task<Profile> GetProfileData(Guid id)
-        //{
-        //    string url = configuration.GetSection("APIConnectionstring:DefaultConnection").Value + "Profile/id/show?id=";
-        //    HttpResponseMessage response = await client.GetAsync(url + id);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string content = await response.Content.ReadAsStringAsync();
-        //        Profile profile = JsonConvert.DeserializeObject<Profile>(content);
-        //        return profile;
-        //    }
-        //    return null;
-        //}
-
         /// <summary>
         /// Login on profile and get bearer token
         /// </summary>
@@ -66,8 +53,11 @@ namespace SmoothNotes.Services.Storage
         /// </summary>
         /// <param name="args">Username and password</param>
         /// <returns>profile id or error message</returns>
-        public static async Task<string> Register(ProfileDTO args)
+        public static async Task<string> Register(Register args)
         {
+            args = await CryptographService.AddKeys(args);
+            
+
             var json = JsonConvert.SerializeObject(args);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync("register", content);
@@ -95,6 +85,16 @@ namespace SmoothNotes.Services.Storage
             if (!resonse.IsSuccessStatusCode)
                 return null;
             return result;
+        }
+
+        public static async Task<bool> Delete(string id)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("auth_token"));
+            var resonse = await client.DeleteAsync("id?id=" + id);
+            if (resonse.IsSuccessStatusCode)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
