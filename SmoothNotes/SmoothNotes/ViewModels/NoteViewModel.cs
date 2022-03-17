@@ -5,6 +5,7 @@ using SmoothNotes.Services.Storage;
 using SmoothNotes.Views.Note;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
@@ -16,9 +17,6 @@ namespace SmoothNotes.ViewModels
     {
         public ObservableRangeCollection<Note> Notes { get; set; }
         public AsyncCommand AddCommand { get; }
-        public AsyncCommand<Note> RemoveCommand { get; }
-        public AsyncCommand<Note> EditCommand { get; }
-        public AsyncCommand<Note> FavoriteCommand { get; }
         public AsyncCommand RefreshCommand { get; }
         public AsyncCommand<Note> SelectedCommand { get; }
         public AsyncCommand<Note> MenuCommand { get; }
@@ -29,22 +27,30 @@ namespace SmoothNotes.ViewModels
             Notes = new ObservableRangeCollection<Note>();
 
             AddCommand = new AsyncCommand(Add);
-            RemoveCommand = new AsyncCommand<Note>(Remove);
-            EditCommand = new AsyncCommand<Note>(Edit);
-            FavoriteCommand = new AsyncCommand<Note>(Favorite);
             RefreshCommand = new AsyncCommand(Refresh);
             SelectedCommand = new AsyncCommand<Note>(Selected);
             MenuCommand = new AsyncCommand<Note>(Menu);
         }
 
-        private Task Menu(Note arg)
+        /// <summary>
+        /// Menu event handler
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
+        private async Task Menu(Note arg)
         {
             var nav = App.Current.MainPage.Navigation;
             ValueParserService.note = arg;
-            NavigationExtensions.ShowPopup(nav, new NoteMenu());
-            return Task.CompletedTask;
+            var done = await NavigationExtensions.ShowPopupAsync(nav, new NoteMenu());
+            if (Convert.ToString(done) == "refresh")
+                await Refresh();
         }
 
+        /// <summary>
+        /// Selected/edit event handler
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private async Task Selected(Note arg)
         {
             ValueParserService.note = arg;
@@ -52,34 +58,39 @@ namespace SmoothNotes.ViewModels
 
         }
 
+        /// <summary>
+        /// Refresh list event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task Refresh()
         {
             IsBusy = true;
             Notes.Clear();
             try
             {
-                List<Note> notes = new List<Note>()
+                bool result = await NoteService.Gather();
+                if (result)
                 {
-                    new Note()
-                    {
-                        Name = "Note 1",
-                        Text = "Note 1 Text"
-                    },
-                    new Note()
-                    {
-                        Name = "Note 2",
-                        Text = "Note 2 Text"
-                    },
-                    new Note()
-                    {
-                        Name = "Note 3",
-                        Text = "Note 3 Text"
-                    }
-                };
+                    var ns = ValueParserService.folder.Notes;
 
-                foreach (var item in notes)
-                {
-                    Notes.Add(item);
+                    ns = ns.OrderBy(f => f.Name).ToList();
+                    foreach (var item in ns)
+                    {
+
+                        // Have to check for doubles otherwise it will add all items twice on a fresh reload. Don't know why?
+                        var check = true;
+                        foreach (var y in Notes)
+                        {
+                            if (y.Id == item.Id)
+                            {
+                                check = false;
+                            }
+                        }
+                        if (check)
+                        {
+                            Notes.Add(item);
+                        }
+                    }
                 }
                 IsBusy = false;
                 await Application.Current.MainPage.DisplayToastAsync("Reloaded", 1000);
@@ -91,26 +102,13 @@ namespace SmoothNotes.ViewModels
             }
         }
 
-        private Task Favorite(Note arg)
-        {
-            throw new NotImplementedException();
-        }
-
-        private async Task Edit(Note arg)
-        {
-            ValueParserService.note = arg;
-            await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}");
-        }
-
-        private Task Remove(Note arg)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Add event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task Add()
         {
-            //var stack = Application.Current.MainPage.Navigation.NavigationStack;
-            //await Application.Current.MainPage.DisplayToastAsync(stack, 2000);
+            ValueParserService.note = null;
             var route = $"{nameof(NoteCreatePage)}";
             await Shell.Current.GoToAsync(route);
         }

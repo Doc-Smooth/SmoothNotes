@@ -53,7 +53,7 @@
                                     xct:TouchEffect.LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NoteViewModel}}, Path=MenuCommand}"
                                     xct:TouchEffect.LongPressCommandParameter="{Binding .}"
                                     xct:TouchEffect.LongPressDuration="500"
-                                    xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NoteViewModel}}, Path=EditCommand}"
+                                    xct:TouchEffect.Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NoteViewModel}}, Path=SelectedCommand}"
                                     xct:TouchEffect.CommandParameter="{Binding .}"
                                     Style="{StaticResource BaseFrame}">
 

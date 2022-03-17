@@ -3,12 +3,13 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Style="{DynamicResource BaseContentPage}"
-    x:Class="SmoothNotes.Views.Profile.ProfileAdminPage">
+    x:Class="SmoothNotes.Views.Profile.ProfileAdminPage"
+    x:Name="ProfileAdminContent">
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal" Padding="15">
                 <Label Style="{DynamicResource LabelMedium}" Text="Biometric Identification" HorizontalOptions="CenterAndExpand" />
-                <Switch Toggled="Switch_Toggled" OnColor="DarkOrange" ThumbColor="LightGray" HorizontalOptions="CenterAndExpand" />
+                <Switch x:Name="bio_switch" Toggled="Switch_Toggled" OnColor="DarkOrange" ThumbColor="LightGray" HorizontalOptions="CenterAndExpand" />
             </StackLayout>
             <Button Style="{DynamicResource BaseButton}" WidthRequest="300" FontSize="Small" FontAttributes="Bold" Text="Delete Profile" Clicked="Button_Clicked" />
         </StackLayout>

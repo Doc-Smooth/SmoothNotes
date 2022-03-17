@@ -15,12 +15,14 @@ using Xamarin.Forms;
 
 namespace SmoothNotes.ViewModels
 {
+    /// <summary>
+    /// Used by both FolderNorm and FolderFav Pages
+    /// </summary>
     public class FolderViewModel : ViewModelBase
     {
         public ObservableRangeCollection<Folder> Folders { get; set; }
         public ObservableRangeCollection<Folder> FoldersFav { get; set; }
         public AsyncCommand AddCommand { get; }
-        public AsyncCommand<Folder> FavoriteCommand { get; }
         public AsyncCommand RefreshCommand { get; }
         public AsyncCommand<Folder> SelectedCommand { get; }
         public AsyncCommand<Folder> MenuCommand { get; }
@@ -38,12 +40,16 @@ namespace SmoothNotes.ViewModels
             }
 
             AddCommand = new AsyncCommand(Add);
-            FavoriteCommand = new AsyncCommand<Folder>(Favorite);
             RefreshCommand = new AsyncCommand(Refresh);
             SelectedCommand = new AsyncCommand<Folder>(Selected);
             MenuCommand = new AsyncCommand<Folder>(Menu);
         }
 
+        /// <summary>
+        /// Menu event handler
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private async Task Menu(Folder arg)
         {
             var nav = App.Current.MainPage.Navigation;
@@ -53,12 +59,21 @@ namespace SmoothNotes.ViewModels
                 await Refresh();
         }
 
+        /// <summary>
+        /// Select/Edit event handler
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private async Task Selected(Folder arg)
         {
             ValueParserService.folder = arg;
             await Shell.Current.GoToAsync($"{nameof(NotePage)}");
         }
 
+        /// <summary>
+        /// Refresh list event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task Refresh()
         {
             IsBusy = true;
@@ -104,11 +119,10 @@ namespace SmoothNotes.ViewModels
             }
         }
 
-        private Task Favorite(Folder arg)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Add folder event handler
+        /// </summary>
+        /// <returns></returns>
         private async Task Add()
         {
             try

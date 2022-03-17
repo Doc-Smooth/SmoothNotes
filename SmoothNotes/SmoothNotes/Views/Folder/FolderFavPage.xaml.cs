@@ -18,6 +18,12 @@ namespace SmoothNotes.Views.Folder
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Logout btn event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Logout_Clicked(object sender, EventArgs e)
         {
             var vm = (FolderViewModel)BindingContext;
@@ -27,23 +33,10 @@ namespace SmoothNotes.Views.Folder
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            //try
-            //{
-            //    var r = await LifeCycleService.StillAlive();
-            //    if (!r)
-            //        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-
-            //}
-            //catch (Exception e)
-            //{
-            //    await Application.Current.MainPage.DisplayToastAsync(e.Message, 2000);
-            //    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-            //}
 
             try
             {
                 var vm = (FolderViewModel)BindingContext;
-                //if (vm.FoldersFav.Count == 0)
                 await vm.RefreshCommand.ExecuteAsync();
             }
             catch (Exception e)

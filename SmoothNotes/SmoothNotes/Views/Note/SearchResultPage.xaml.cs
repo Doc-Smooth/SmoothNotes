@@ -20,6 +20,11 @@ namespace SmoothNotes.Views.Note
                 BindList(value);
             }
         }
+
+        /// <summary>
+        /// Deserializes json and binds it
+        /// </summary>
+        /// <param name="list"></param>
         void BindList(string list)
         {
             try
@@ -41,18 +46,6 @@ namespace SmoothNotes.Views.Note
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            //try
-            //{
-            //    var r = await LifeCycleService.StillAlive();
-            //    if (!r)
-            //        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-
-            //}
-            //catch (Exception e)
-            //{
-            //    await Application.Current.MainPage.DisplayToastAsync(e.Message, 2000);
-            //    await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-            //}
         }
     }
 }

@@ -6,7 +6,6 @@
     x:Class="SmoothNotes.Views.Landing.LoginPage"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False"
-    Shell.PresentationMode="Modal"
     Style="{DynamicResource BaseContentPage}">
     <ContentPage.Content>
         <StackLayout
@@ -52,7 +51,16 @@
                 Margin="10"
                 Style="{DynamicResource BaseButton}"
                 Clicked="Login_Clicked" />
-            
+
+            <Button 
+                x:Name="bioBtn"
+                Text="Biometric login"
+                WidthRequest="260"
+                HeightRequest="40"
+                Margin="10"
+                Style="{DynamicResource BaseButton}"
+                Clicked="Biometric_Clicked" />
+
             <Button 
                 Text="Register"
                 WidthRequest="260"
