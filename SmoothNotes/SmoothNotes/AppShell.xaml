@@ -8,7 +8,8 @@
        x:Class="SmoothNotes.AppShell"
        BackgroundColor="{StaticResource Primary}"
        FlyoutBackgroundColor="{StaticResource WindowBackgroundColor}"
-       xmlns:local1="clr-namespace:SmoothNotes.Views.Landing">
+       xmlns:local1="clr-namespace:SmoothNotes.Views.Landing" 
+       >
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.

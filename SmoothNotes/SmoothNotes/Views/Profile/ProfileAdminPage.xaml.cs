@@ -97,10 +97,9 @@ namespace SmoothNotes.Views.Profile
 
         protected override async void OnAppearing()
         {
+            base.OnAppearing();
             if (!await ProfileService.Refresh())
                 await Logout();
-
-            base.OnAppearing();
 
             //Sets biometric option to match saved value. Removes event then sets the bool and adds event back in.
             var bios = await BiometricService.BiometricStatus();
@@ -112,6 +111,13 @@ namespace SmoothNotes.Views.Profile
                     Biometric = true;
             }
             bio_switch.Toggled += Switch_Toggled;
+        }
+
+        protected override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (!await ProfileService.Refresh())
+                await Logout();
         }
 
         /// <summary>

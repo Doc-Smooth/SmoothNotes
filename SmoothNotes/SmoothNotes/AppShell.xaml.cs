@@ -8,6 +8,9 @@ using SmoothNotes.Views.Folder;
 using SmoothNotes.Views.Note;
 using SmoothNotes.Views.Profile;
 using System.Linq;
+using SmoothNotes.Services.Storage;
+using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Extensions;
 
 namespace SmoothNotes
 {
@@ -29,8 +32,6 @@ namespace SmoothNotes
             Routing.RegisterRoute(nameof(NoteCreatePage), typeof(NoteCreatePage));
             Routing.RegisterRoute(nameof(SearchResultPage), typeof(SearchResultPage));
         }
-
-
 
         //private async void OnMenuItemClicked(object sender, EventArgs e)
         //{
