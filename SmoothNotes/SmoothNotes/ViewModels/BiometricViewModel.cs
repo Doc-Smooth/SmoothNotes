@@ -73,6 +73,5 @@ namespace SmoothNotes.ViewModels
                 Profiles.Add(new ProfileDTO { username = item });
             }
         }
-
     }
 }

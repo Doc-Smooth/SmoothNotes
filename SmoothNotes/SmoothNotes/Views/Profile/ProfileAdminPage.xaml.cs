@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -82,6 +83,8 @@ namespace SmoothNotes.Views.Profile
                 result = await ProfileService.Delete(ValueParserService.profile.Id);
                 if (result)
                 {
+                    SecureStorage.Remove(ValueParserService.profile.Name);
+                    await BiometricService.UpdateList(ValueParserService.profile.Name);
                     await Application.Current.MainPage.DisplayToastAsync("Profile Deleted", 1000);
                     await Logout();
                 }
@@ -117,13 +120,13 @@ namespace SmoothNotes.Views.Profile
         /// <returns></returns>
         internal async Task Logout()
         {
+            //Overrides all stored values and logs profile out.
             if (await ValueParserService.Empty())
             {
-                await Application.Current.MainPage.DisplayToastAsync("Logging out", 500);
+                await Application.Current.MainPage.DisplayToastAsync("Logging out", 1000);
                 await Shell.Current.Navigation.PopToRootAsync();
                 await Shell.Current.GoToAsync($"///{nameof(LandingPage)}");
                 await Shell.Current.Navigation.PopToRootAsync();
-
 
             }
             else

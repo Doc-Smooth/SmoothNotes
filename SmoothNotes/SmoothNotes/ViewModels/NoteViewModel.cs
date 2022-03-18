@@ -39,6 +39,9 @@ namespace SmoothNotes.ViewModels
         /// <returns></returns>
         private async Task Menu(Note arg)
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             var nav = App.Current.MainPage.Navigation;
             ValueParserService.note = arg;
             var done = await NavigationExtensions.ShowPopupAsync(nav, new NoteMenu());
@@ -53,6 +56,9 @@ namespace SmoothNotes.ViewModels
         /// <returns></returns>
         private async Task Selected(Note arg)
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             ValueParserService.note = arg;
             await Shell.Current.GoToAsync($"{nameof(NoteEditPage)}");
 
@@ -64,6 +70,9 @@ namespace SmoothNotes.ViewModels
         /// <returns></returns>
         private async Task Refresh()
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             IsBusy = true;
             Notes.Clear();
             try
@@ -108,6 +117,9 @@ namespace SmoothNotes.ViewModels
         /// <returns></returns>
         private async Task Add()
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             ValueParserService.note = null;
             var route = $"{nameof(NoteCreatePage)}";
             await Shell.Current.GoToAsync(route);

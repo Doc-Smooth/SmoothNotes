@@ -48,6 +48,31 @@ namespace SmoothNotes.Services.Storage
             bioJson = JsonConvert.SerializeObject(bValue);
             await SecureStorage.SetAsync("bio_status", bioJson);
         }
+
+        public async static Task UpdateList(string username)
+        {
+            List<string> bValue;
+            var bioJson = "";
+            bioJson = await SecureStorage.GetAsync("bio_status");
+            if (string.IsNullOrEmpty(bioJson))
+                return;
+            else
+                bValue = JsonConvert.DeserializeObject<List<string>>(bioJson);
+
+            var found = false;
+            foreach (var item in bValue)
+            {
+                if (item == username)
+                {
+                    found = true;
+                }
+            }
+            if (found)
+                bValue.Remove(username);
+
+            bioJson = JsonConvert.SerializeObject(bValue);
+            await SecureStorage.SetAsync("bio_status", bioJson);
+        }
         public async static Task FirstTimeSetup()
         {
             List<string> bValue = new List<string>();

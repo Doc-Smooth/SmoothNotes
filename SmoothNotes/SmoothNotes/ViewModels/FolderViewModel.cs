@@ -52,6 +52,9 @@ namespace SmoothNotes.ViewModels
         /// <returns></returns>
         private async Task Menu(Folder arg)
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             var nav = App.Current.MainPage.Navigation;
             ValueParserService.folder = arg;
             var done = await NavigationExtensions.ShowPopupAsync(nav, new FolderMenu());
@@ -66,6 +69,9 @@ namespace SmoothNotes.ViewModels
         /// <returns></returns>
         private async Task Selected(Folder arg)
         {
+            if (!await ProfileService.Refresh())
+                await Logout();
+
             ValueParserService.folder = arg;
             await Shell.Current.GoToAsync($"{nameof(NotePage)}");
         }
