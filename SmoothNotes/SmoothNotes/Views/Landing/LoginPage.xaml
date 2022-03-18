@@ -18,7 +18,6 @@
                 x:Name="Username"
                 HorizontalTextAlignment="Center"
                 Style="{DynamicResource EntryMedium}"
-                Text="TestInitEncrypted"
                 Margin="10">
                 <Entry.PlaceholderColor>
                     <OnPlatform x:TypeArguments="Color">
@@ -34,7 +33,6 @@
                 x:Name="Password"
                 HorizontalTextAlignment="Center"
                 Style="{DynamicResource EntryMedium}"
-                Text="Password123"
                 Margin="10">
                 <Entry.PlaceholderColor>
                     <OnPlatform x:TypeArguments="Color">
