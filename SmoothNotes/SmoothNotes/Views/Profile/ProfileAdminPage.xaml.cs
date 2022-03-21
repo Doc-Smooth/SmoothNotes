@@ -113,12 +113,12 @@ namespace SmoothNotes.Views.Profile
             bio_switch.Toggled += Switch_Toggled;
         }
 
-        protected override async void OnDisappearing()
-        {
-            base.OnDisappearing();
-            if (!await ProfileService.Refresh())
-                await Logout();
-        }
+        //protected override async void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    if (!await ProfileService.Refresh())
+        //        await Logout();
+        //}
 
         /// <summary>
         /// Logout btn event handler

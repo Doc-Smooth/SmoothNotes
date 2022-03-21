@@ -16,6 +16,7 @@
             <local:MyEntry 
                 Placeholder="Username"
                 x:Name="Username"
+                Text="Test2"
                 HorizontalTextAlignment="Center"
                 Style="{DynamicResource EntryMedium}"
                 Margin="10">
@@ -31,6 +32,7 @@
                 IsPassword="True"
                 Placeholder="Password"
                 x:Name="Password"
+                Text="Password123"
                 HorizontalTextAlignment="Center"
                 Style="{DynamicResource EntryMedium}"
                 Margin="10">

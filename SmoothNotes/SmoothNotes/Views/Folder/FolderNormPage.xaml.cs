@@ -46,12 +46,12 @@ namespace SmoothNotes.Views.Folder
             }
         }
 
-        protected override async void OnDisappearing()
-        {
-            base.OnDisappearing();
-            if (!await ProfileService.Refresh())
-                await Logout();
-        }
+        //protected override async void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    if (!await ProfileService.Refresh())
+        //        await Logout();
+        //}
 
         internal async Task Logout()
         {
@@ -61,7 +61,7 @@ namespace SmoothNotes.Views.Folder
                 await Application.Current.MainPage.DisplayToastAsync("Logging out", 1000);
                 await Shell.Current.Navigation.PopToRootAsync();
                 await Shell.Current.GoToAsync($"///{nameof(LandingPage)}");
-                await Shell.Current.Navigation.PopToRootAsync();
+                //await Shell.Current.Navigation.PopToRootAsync();
 
             }
             else

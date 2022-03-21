@@ -27,10 +27,18 @@ namespace SmoothNotes.ViewModels
             //Overrides all stored values and logs profile out.
             if (await ValueParserService.Empty())
             {
-                await Application.Current.MainPage.DisplayToastAsync("Logging out", 1000);
-                await Shell.Current.Navigation.PopToRootAsync();
-                await Shell.Current.GoToAsync($"///{nameof(LandingPage)}");
-                await Shell.Current.Navigation.PopToRootAsync();
+                try
+                {
+                    await Application.Current.MainPage.DisplayToastAsync("Logging out", 1000);
+                    await Shell.Current.Navigation.PopToRootAsync();
+                    await Shell.Current.GoToAsync($"///{nameof(LandingPage)}");
+                    await Shell.Current.Navigation.PopToRootAsync();
+
+                }
+                catch (Exception e)
+                {
+                    await Application.Current.MainPage.DisplayToastAsync(e.Message, 3000);
+                }
 
             }
             else

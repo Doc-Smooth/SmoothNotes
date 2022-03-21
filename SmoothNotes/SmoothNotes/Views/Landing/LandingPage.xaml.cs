@@ -33,7 +33,7 @@ namespace SmoothNotes.Views.Landing
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await Shell.Current.Navigation.PopToRootAsync();
+            //await Shell.Current.Navigation.PopToRootAsync();
         }
     }
 }
