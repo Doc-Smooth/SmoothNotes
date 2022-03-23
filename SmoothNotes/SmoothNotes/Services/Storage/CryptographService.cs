@@ -21,24 +21,27 @@ namespace SmoothNotes.Services.Storage
         /// <returns></returns>
         private static async Task<byte[]> GetKeyBytes(string arg)
         {
-            //string conv;
+            //Password is minimum 8 characters
 
-            //conv = arg.Substring(16, 16);
-
+            // Padding characters
             List<string> filler = new List<string> { "0", "j", "f", "i", "5", "o", "j", "f", "i", "e", "7", "j", "i", "f", "j", "a", "o", "e", "8", "f", "k", "n", "u", "9", "u", "e", "1", "h", "d", "a", "k", "d" };
             Console.WriteLine(filler.Count);
             int i = 1;
+
+            // Password larger than 32 characters
             if (arg.Length > 32)
             {
                 arg = arg.Substring(0, 32);
             }
 
+            // Password smaller than 32 characters, until it is 32 characters
             while (arg.Length < 32)
             {
                 arg += filler[i];
                 i++;
             }
 
+            // Returns padded password
             return await ConvertToByteArray(arg);
         }
 
