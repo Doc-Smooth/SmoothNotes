@@ -13,6 +13,12 @@ namespace SmoothNotes.Services.Storage
     public static class CryptographService
     {
         private static string containerName = "RSAContainer";
+
+        /// <summary>
+        /// Converts password to usable byte[] for encryption
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
         private static async Task<byte[]> GetKeyBytes(string arg)
         {
             //string conv;
@@ -45,6 +51,13 @@ namespace SmoothNotes.Services.Storage
             return notes;
         }
 
+        /// <summary>
+        /// Decrypt RSA data
+        /// </summary>
+        /// <param name="DataToDecrypt">data</param>
+        /// <param name="Key">Private key</param>
+        /// <param name="DoOAEPPadding">bool for padding settings - default should be false</param>
+        /// <returns></returns>
         private static async Task<string> RSADecrypt(string DataToDecrypt, string Key, bool DoOAEPPadding)
         {
             try
@@ -76,6 +89,11 @@ namespace SmoothNotes.Services.Storage
             }
         }
 
+        /// <summary>
+        /// Creating, Adding private and public key to a new profile being created.
+        /// </summary>
+        /// <param name="args">object for creating new profile</param>
+        /// <returns></returns>
         internal static async Task<Register> AddKeys(Register args)
         {
             List<string> pair = new List<string>();
@@ -91,6 +109,12 @@ namespace SmoothNotes.Services.Storage
             return args;
         }
 
+        /// <summary>
+        /// Quick translation for reading the puk key
+        /// Puk key is a byte[], but is converted to hex string and then base64 for storage
+        /// </summary>
+        /// <param name="puK">public key</param>
+        /// <returns></returns>
         public static async Task<string> ReadPuKKey(string puK)
         {
             return await ReadEncodedKey(await ByteArrayToHexString(Convert.FromBase64String(puK)));
@@ -122,6 +146,13 @@ namespace SmoothNotes.Services.Storage
             return input.Select(Convert.ToByte).ToArray();
         }
 
+        /// <summary>
+        /// Encrypts data with AES process
+        /// </summary>
+        /// <param name="Text">data</param>
+        /// <param name="Key">key for encryption</param>
+        /// <returns>string containing IV and encrypted code</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         private static async Task<string> AesEncrypt(string Text, string Key)
         {
             //Check values
@@ -157,6 +188,13 @@ namespace SmoothNotes.Services.Storage
             return final;
         }
 
+        /// <summary>
+        /// Decrypts AES encrypted data
+        /// </summary>
+        /// <param name="cText">encrypted data</param>
+        /// <param name="Key">key for decryption</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         private static async Task<string> AesDecrypt(string cText, string Key)
         {
             //Check values
@@ -190,6 +228,13 @@ namespace SmoothNotes.Services.Storage
             return dData;
         }
 
+        /// <summary>
+        /// Encrypts data with RSA
+        /// </summary>
+        /// <param name="DataToEncrypt">data</param>
+        /// <param name="Key">public key</param>
+        /// <param name="DoOAEPPadding">bool for padding settings - default should be false</param>
+        /// <returns></returns>
         public static async Task<string> RSAEncrypt(string DataToEncrypt, string Key, bool DoOAEPPadding)
         {
             byte[] data = await ConvertToByteArray(DataToEncrypt);
@@ -211,6 +256,10 @@ namespace SmoothNotes.Services.Storage
             return Convert.ToBase64String(encryptedData);
         }
 
+        /// <summary>
+        /// Generates private and public key
+        /// </summary>
+        /// <returns>list of string</returns>
         private static async Task<List<string>> GenKeyPair()
         {
             // Create the CspParameters object and set the key container
